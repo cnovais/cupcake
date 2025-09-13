@@ -124,9 +124,20 @@ const Catalog = () => {
         {/* Step 1: Cake Selection */}
         {currentStep === 1 && (
           <div className="bg-white rounded-lg shadow-md p-6">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">
-              Escolha o tipo de massa
-            </h2>
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-2xl font-bold text-gray-900">
+                Escolha o tipo de massa
+              </h2>
+              <button
+                onClick={() => navigate('/')}
+                className="flex items-center space-x-2 text-primary-600 hover:text-primary-700 transition-colors"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+                <span>Voltar ao Início</span>
+              </button>
+            </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {cakeTypes.map((cake) => (
                 <div
@@ -157,9 +168,12 @@ const Catalog = () => {
               </h2>
               <button
                 onClick={() => setCurrentStep(1)}
-                className="text-primary-600 hover:text-primary-700"
+                className="flex items-center space-x-2 text-primary-600 hover:text-primary-700 transition-colors"
               >
-                ← Voltar
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+                <span>Voltar</span>
               </button>
             </div>
             
@@ -219,9 +233,12 @@ const Catalog = () => {
               </h2>
               <button
                 onClick={() => setCurrentStep(2)}
-                className="text-primary-600 hover:text-primary-700"
+                className="flex items-center space-x-2 text-primary-600 hover:text-primary-700 transition-colors"
               >
-                ← Voltar
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+                <span>Voltar</span>
               </button>
             </div>
 
@@ -255,9 +272,12 @@ const Catalog = () => {
               </h2>
               <button
                 onClick={() => setCurrentStep(3)}
-                className="text-primary-600 hover:text-primary-700"
+                className="flex items-center space-x-2 text-primary-600 hover:text-primary-700 transition-colors"
               >
-                ← Voltar
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+                <span>Voltar</span>
               </button>
             </div>
 
