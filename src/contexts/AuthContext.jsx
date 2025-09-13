@@ -1,4 +1,14 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { 
+  getCurrentUser, 
+  authenticateUser, 
+  saveUser, 
+  isEmailRegistered, 
+  getUserByEmail,
+  updateUser,
+  logoutUser,
+  getUserStats 
+} from '../utils/userStorage';
 
 const AuthContext = createContext();
 
@@ -16,9 +26,9 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     // Carregar usuário do localStorage ao inicializar
-    const savedUser = localStorage.getItem('user');
+    const savedUser = getCurrentUser();
     if (savedUser) {
-      setUser(JSON.parse(savedUser));
+      setUser(savedUser);
     }
     setLoading(false);
   }, []);
@@ -27,16 +37,14 @@ export const AuthProvider = ({ children }) => {
     return new Promise((resolve, reject) => {
       // Simular delay de API
       setTimeout(() => {
-        const users = JSON.parse(localStorage.getItem('users') || '[]');
-        const foundUser = users.find(u => u.email === email && u.password === password);
+        const result = authenticateUser(email, password);
         
-        if (foundUser) {
-          const { password: _, ...userWithoutPassword } = foundUser;
+        if (result.success) {
+          const { password: _, ...userWithoutPassword } = result.user;
           setUser(userWithoutPassword);
-          localStorage.setItem('user', JSON.stringify(userWithoutPassword));
           resolve(userWithoutPassword);
         } else {
-          reject(new Error('Email ou senha incorretos'));
+          reject(new Error(result.message));
         }
       }, 1000);
     });
@@ -45,30 +53,30 @@ export const AuthProvider = ({ children }) => {
   const register = (name, email, password) => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        const users = JSON.parse(localStorage.getItem('users') || '[]');
-        
         // Verificar se email já existe
-        if (users.find(u => u.email === email)) {
+        if (isEmailRegistered(email)) {
           reject(new Error('Email já cadastrado'));
           return;
         }
 
         const newUser = {
-          id: Date.now().toString(),
           name,
           email,
-          password,
-          createdAt: new Date().toISOString()
+          password
         };
 
-        users.push(newUser);
-        localStorage.setItem('users', JSON.stringify(users));
-
-        const { password: _, ...userWithoutPassword } = newUser;
-        setUser(userWithoutPassword);
-        localStorage.setItem('user', JSON.stringify(userWithoutPassword));
+        const success = saveUser(newUser);
         
-        resolve(userWithoutPassword);
+        if (success) {
+          const savedUser = getUserByEmail(email);
+          const { password: _, ...userWithoutPassword } = savedUser;
+          setUser(userWithoutPassword);
+          // Salvar usuário atual na sessão
+          localStorage.setItem('lumiere_cupcakes_current_user', JSON.stringify(userWithoutPassword));
+          resolve(userWithoutPassword);
+        } else {
+          reject(new Error('Erro ao salvar usuário'));
+        }
       }, 1000);
     });
   };
@@ -76,25 +84,45 @@ export const AuthProvider = ({ children }) => {
   const forgotPassword = (email, newPassword) => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        const users = JSON.parse(localStorage.getItem('users') || '[]');
-        const userIndex = users.findIndex(u => u.email === email);
+        const user = getUserByEmail(email);
         
-        if (userIndex === -1) {
+        if (!user) {
           reject(new Error('Email não encontrado'));
           return;
         }
 
-        users[userIndex].password = newPassword;
-        localStorage.setItem('users', JSON.stringify(users));
+        const result = updateUser(user.id, { password: newPassword });
         
-        resolve('Senha redefinida com sucesso');
+        if (result.success) {
+          resolve('Senha redefinida com sucesso');
+        } else {
+          reject(new Error(result.message));
+        }
       }, 1000);
     });
   };
 
   const logout = () => {
     setUser(null);
-    localStorage.removeItem('user');
+    logoutUser();
+  };
+
+  // Função para atualizar dados do usuário
+  const updateUserProfile = (userId, updatedData) => {
+    const result = updateUser(userId, updatedData);
+    
+    if (result.success) {
+      const { password: _, ...userWithoutPassword } = result.user;
+      setUser(userWithoutPassword);
+      return { success: true, user: userWithoutPassword };
+    }
+    
+    return result;
+  };
+
+  // Função para obter estatísticas dos usuários
+  const getStats = () => {
+    return getUserStats();
   };
 
   const value = {
@@ -103,6 +131,8 @@ export const AuthProvider = ({ children }) => {
     register,
     forgotPassword,
     logout,
+    updateUserProfile,
+    getStats,
     loading
   };
 

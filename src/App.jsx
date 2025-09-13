@@ -15,6 +15,7 @@ import OrderSuccess from './pages/OrderSuccess';
 import Profile from './pages/Profile';
 import About from './pages/About';
 import Contact from './pages/Contact';
+import Admin from './pages/Admin';
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
               <Route path="/profile" element={<Layout><Profile /></Layout>} />
               <Route path="/about" element={<Layout><About /></Layout>} />
               <Route path="/contact" element={<Layout><Contact /></Layout>} />
+              <Route path="/admin" element={<Layout><Admin /></Layout>} />
             </Routes>
           </OrderProvider>
         </CartProvider>
