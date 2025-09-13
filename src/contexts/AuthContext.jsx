@@ -7,8 +7,9 @@ import {
   getUserByEmail,
   updateUser,
   logoutUser,
-  getUserStats 
-} from '../utils/userStorage';
+  getUserStats,
+  syncLocalStorageWithFiles
+} from '../utils/fileUserStorage';
 
 const AuthContext = createContext();
 
@@ -25,91 +26,129 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Carregar usuário do localStorage ao inicializar
-    const savedUser = getCurrentUser();
-    if (savedUser) {
-      setUser(savedUser);
-    }
-    setLoading(false);
+    // Carregar usuário ao inicializar
+    const loadUser = async () => {
+      try {
+        // Sincronizar dados do LocalStorage com arquivos (para desenvolvimento)
+        await syncLocalStorageWithFiles();
+        
+        // Carregar usuário atual
+        const savedUser = await getCurrentUser();
+        if (savedUser) {
+          setUser(savedUser);
+        }
+      } catch (error) {
+        console.error('Erro ao carregar usuário:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    loadUser();
   }, []);
 
   const login = (email, password) => {
-    return new Promise((resolve, reject) => {
-      // Simular delay de API
-      setTimeout(() => {
-        const result = authenticateUser(email, password);
-        
-        if (result.success) {
-          const { password: _, ...userWithoutPassword } = result.user;
-          setUser(userWithoutPassword);
-          resolve(userWithoutPassword);
-        } else {
-          reject(new Error(result.message));
-        }
-      }, 1000);
+    return new Promise(async (resolve, reject) => {
+      try {
+        // Simular delay de API
+        setTimeout(async () => {
+          try {
+            const result = await authenticateUser(email, password);
+            
+            if (result.success) {
+              const { password: _, ...userWithoutPassword } = result.user;
+              setUser(userWithoutPassword);
+              resolve(userWithoutPassword);
+            } else {
+              reject(new Error(result.message));
+            }
+          } catch (error) {
+            reject(error);
+          }
+        }, 1000);
+      } catch (error) {
+        reject(error);
+      }
     });
   };
 
   const register = (name, email, password) => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        // Verificar se email já existe
-        if (isEmailRegistered(email)) {
-          reject(new Error('Email já cadastrado'));
-          return;
-        }
+    return new Promise(async (resolve, reject) => {
+      try {
+        setTimeout(async () => {
+          try {
+            // Verificar se email já existe
+            const emailExists = await isEmailRegistered(email);
+            if (emailExists) {
+              reject(new Error('Email já cadastrado'));
+              return;
+            }
 
-        const newUser = {
-          name,
-          email,
-          password
-        };
+            const newUser = {
+              name,
+              email,
+              password
+            };
 
-        const success = saveUser(newUser);
-        
-        if (success) {
-          const savedUser = getUserByEmail(email);
-          const { password: _, ...userWithoutPassword } = savedUser;
-          setUser(userWithoutPassword);
-          // Salvar usuário atual na sessão
-          localStorage.setItem('lumiere_cupcakes_current_user', JSON.stringify(userWithoutPassword));
-          resolve(userWithoutPassword);
-        } else {
-          reject(new Error('Erro ao salvar usuário'));
-        }
-      }, 1000);
+            const success = await saveUser(newUser);
+            
+            if (success) {
+              const savedUser = await getUserByEmail(email);
+              const { password: _, ...userWithoutPassword } = savedUser;
+              setUser(userWithoutPassword);
+              // Salvar usuário atual na sessão
+              localStorage.setItem('lumiere_cupcakes_current_user', JSON.stringify(userWithoutPassword));
+              resolve(userWithoutPassword);
+            } else {
+              reject(new Error('Erro ao salvar usuário'));
+            }
+          } catch (error) {
+            reject(error);
+          }
+        }, 1000);
+      } catch (error) {
+        reject(error);
+      }
     });
   };
 
   const forgotPassword = (email, newPassword) => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        const user = getUserByEmail(email);
-        
-        if (!user) {
-          reject(new Error('Email não encontrado'));
-          return;
-        }
+    return new Promise(async (resolve, reject) => {
+      try {
+        setTimeout(async () => {
+          try {
+            const user = await getUserByEmail(email);
+            
+            if (!user) {
+              reject(new Error('Email não encontrado'));
+              return;
+            }
 
-        const result = updateUser(user.id, { password: newPassword });
-        
-        if (result.success) {
-          resolve('Senha redefinida com sucesso');
-        } else {
-          reject(new Error(result.message));
-        }
-      }, 1000);
+            const result = await updateUser(user.id, { password: newPassword });
+            
+            if (result.success) {
+              resolve('Senha redefinida com sucesso');
+            } else {
+              reject(new Error(result.message));
+            }
+          } catch (error) {
+            reject(error);
+          }
+        }, 1000);
+      } catch (error) {
+        reject(error);
+      }
     });
   };
 
-  const logout = () => {
+  const logout = async () => {
     setUser(null);
-    logoutUser();
+    await logoutUser();
   };
 
   // Função para atualizar dados do usuário
-  const updateUserProfile = (userId, updatedData) => {
-    const result = updateUser(userId, updatedData);
+  const updateUserProfile = async (userId, updatedData) => {
+    const result = await updateUser(userId, updatedData);
     
     if (result.success) {
       const { password: _, ...userWithoutPassword } = result.user;
@@ -121,8 +160,8 @@ export const AuthProvider = ({ children }) => {
   };
 
   // Função para obter estatísticas dos usuários
-  const getStats = () => {
-    return getUserStats();
+  const getStats = async () => {
+    return await getUserStats();
   };
 
   const value = {

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import { getUsers, getUserStats, clearAllUsers, deleteUser } from '../utils/userStorage';
+import { getUsers, getUserStats, clearAllUsers, deleteUser } from '../utils/fileUserStorage';
 
 const Admin = () => {
   const { user, getStats } = useAuth();
@@ -14,10 +14,10 @@ const Admin = () => {
     loadData();
   }, []);
 
-  const loadData = () => {
+  const loadData = async () => {
     try {
-      const allUsers = getUsers();
-      const userStats = getStats();
+      const allUsers = await getUsers();
+      const userStats = await getStats();
       
       setUsers(allUsers);
       setStats(userStats);
@@ -33,11 +33,11 @@ const Admin = () => {
     setShowConfirm(true);
   };
 
-  const confirmDeleteUser = () => {
+  const confirmDeleteUser = async () => {
     if (userToDelete) {
-      const success = deleteUser(userToDelete.id);
+      const success = await deleteUser(userToDelete.id);
       if (success) {
-        loadData(); // Recarregar dados
+        await loadData(); // Recarregar dados
         alert(`Usuário ${userToDelete.name} deletado com sucesso!`);
       } else {
         alert('Erro ao deletar usuário');
@@ -47,11 +47,11 @@ const Admin = () => {
     setUserToDelete(null);
   };
 
-  const handleClearAllUsers = () => {
+  const handleClearAllUsers = async () => {
     if (window.confirm('⚠️ ATENÇÃO: Isso irá deletar TODOS os usuários cadastrados. Tem certeza?')) {
-      const success = clearAllUsers();
+      const success = await clearAllUsers();
       if (success) {
-        loadData();
+        await loadData();
         alert('Todos os usuários foram deletados!');
       } else {
         alert('Erro ao limpar usuários');
