@@ -9,10 +9,27 @@ const Admin = () => {
   const [loading, setLoading] = useState(true);
   const [showConfirm, setShowConfirm] = useState(false);
   const [userToDelete, setUserToDelete] = useState(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [adminCredentials, setAdminCredentials] = useState({ username: '', password: '' });
 
   useEffect(() => {
-    loadData();
-  }, []);
+    if (isAuthenticated) {
+      loadData();
+    }
+  }, [isAuthenticated]);
+
+  const handleAdminLogin = (e) => {
+    e.preventDefault();
+    const { username, password } = adminCredentials;
+    
+    if (username === 'admin' && password === 'cleitonbonitao') {
+      setIsAuthenticated(true);
+      setLoading(true);
+    } else {
+      alert('Credenciais incorretas!');
+      setAdminCredentials({ username: '', password: '' });
+    }
+  };
 
   const loadData = async () => {
     try {
@@ -69,6 +86,72 @@ const Admin = () => {
     }
   };
 
+  // Tela de login do admin
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-md w-full space-y-8">
+          <div>
+            <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+              Acesso Administrativo
+            </h2>
+            <p className="mt-2 text-center text-sm text-gray-600">
+              Digite suas credenciais para acessar o painel
+            </p>
+          </div>
+          <form className="mt-8 space-y-6" onSubmit={handleAdminLogin}>
+            <div className="rounded-md shadow-sm -space-y-px">
+              <div>
+                <label htmlFor="username" className="sr-only">
+                  Usuário
+                </label>
+                <input
+                  id="username"
+                  name="username"
+                  type="text"
+                  required
+                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 focus:z-10 sm:text-sm"
+                  placeholder="Usuário"
+                  value={adminCredentials.username}
+                  onChange={(e) => setAdminCredentials({...adminCredentials, username: e.target.value})}
+                />
+              </div>
+              <div>
+                <label htmlFor="password" className="sr-only">
+                  Senha
+                </label>
+                <input
+                  id="password"
+                  name="password"
+                  type="password"
+                  required
+                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 focus:z-10 sm:text-sm"
+                  placeholder="Senha"
+                  value={adminCredentials.password}
+                  onChange={(e) => setAdminCredentials({...adminCredentials, password: e.target.value})}
+                />
+              </div>
+            </div>
+
+            <div>
+              <button
+                type="submit"
+                className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
+              >
+                <span className="absolute left-0 inset-y-0 flex items-center pl-3">
+                  <svg className="h-5 w-5 text-primary-500 group-hover:text-primary-400" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
+                  </svg>
+                </span>
+                Entrar
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    );
+  }
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -85,12 +168,25 @@ const Admin = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            Painel de Administração
-          </h1>
-          <p className="text-gray-600">
-            Gerenciar usuários cadastrados na Lumière cupcakes
-          </p>
+          <div className="flex justify-between items-center">
+            <div>
+              <h1 className="text-3xl font-bold text-gray-900 mb-2">
+                Painel de Administração
+              </h1>
+              <p className="text-gray-600">
+                Gerenciar usuários cadastrados na Lumière cupcakes
+              </p>
+            </div>
+            <button
+              onClick={() => setIsAuthenticated(false)}
+              className="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-lg text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
+            >
+              <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+              </svg>
+              Logout
+            </button>
+          </div>
         </div>
 
         {/* Estatísticas */}

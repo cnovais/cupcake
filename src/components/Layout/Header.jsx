@@ -55,12 +55,6 @@ const Header = () => {
                 >
                   Meu Perfil
                 </Link>
-                <Link 
-                  to="/admin" 
-                  className="text-gray-600 hover:text-primary-600 transition-colors"
-                >
-                  Admin
-                </Link>
               </>
             )}
           </nav>
