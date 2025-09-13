@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Contact = () => {
   const handleWhatsAppClick = () => {
@@ -236,12 +237,12 @@ const Contact = () => {
               </svg>
               WhatsApp
             </button>
-            <a
-              href="/catalog"
+            <Link
+              to="/catalog"
               className="inline-flex items-center justify-center px-8 py-4 border border-white text-lg font-medium rounded-lg text-white hover:bg-white hover:text-primary-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white transition-colors"
             >
               Ver Catálogo
-            </a>
+            </Link>
           </div>
         </div>
       </section>

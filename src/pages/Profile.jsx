@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useOrder } from '../contexts/OrderContext';
 
@@ -95,12 +96,12 @@ const Profile = () => {
               <p className="text-gray-600 mb-6">
                 Que tal fazer seu primeiro pedido de cupcakes?
               </p>
-              <a
-                href="/catalog"
+              <Link
+                to="/catalog"
                 className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-lg text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors"
               >
                 Ver Catálogo
-              </a>
+              </Link>
             </div>
           ) : (
             <div className="divide-y divide-gray-200">
