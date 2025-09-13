@@ -35,6 +35,18 @@ const Header = () => {
             >
               Catálogo
             </Link>
+            <Link 
+              to="/about" 
+              className="text-gray-600 hover:text-primary-600 transition-colors"
+            >
+              Sobre Nós
+            </Link>
+            <Link 
+              to="/contact" 
+              className="text-gray-600 hover:text-primary-600 transition-colors"
+            >
+              Contato
+            </Link>
             {user && (
               <Link 
                 to="/profile" 
