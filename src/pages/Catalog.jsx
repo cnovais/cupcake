@@ -92,9 +92,24 @@ const Catalog = () => {
 
         {/* Progress Steps - Fixed */}
         <div className="sticky top-0 bg-white shadow-sm z-50 mb-8 py-4">
-          {/* Back Button - Fixed */}
+          {/* Back Button - Mobile */}
           {currentStep > 1 && (
-            <div className="absolute left-4 top-1/2 transform -translate-y-1/2 z-60">
+            <div className="flex justify-center mb-4 md:hidden">
+              <button
+                onClick={() => setCurrentStep(currentStep - 1)}
+                className="flex items-center space-x-1 text-white bg-primary-500 hover:bg-primary-600 transition-colors px-4 py-2 rounded-full shadow-lg"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+                <span className="text-sm font-medium">Voltar</span>
+              </button>
+            </div>
+          )}
+
+          {/* Desktop Back Button */}
+          {currentStep > 1 && (
+            <div className="hidden md:block absolute left-4 top-1/2 transform -translate-y-1/2 z-60">
               <button
                 onClick={() => setCurrentStep(currentStep - 1)}
                 className="flex items-center space-x-2 text-primary-600 hover:text-primary-700 transition-colors bg-primary-50 px-3 py-2 rounded-lg shadow-md hover:shadow-lg"
@@ -108,10 +123,10 @@ const Catalog = () => {
           )}
           
           {/* Progress Circles */}
-          <div className="flex items-center justify-center space-x-4">
+          <div className="flex items-center justify-center space-x-2 md:space-x-4">
             {[1, 2, 3, 4].map((step) => (
               <div key={step} className="flex items-center">
-                <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${
+                <div className={`w-6 h-6 md:w-8 md:h-8 rounded-full flex items-center justify-center text-xs md:text-sm font-medium ${
                   currentStep >= step 
                     ? 'bg-primary-500 text-white' 
                     : 'bg-gray-200 text-gray-600'
@@ -119,7 +134,7 @@ const Catalog = () => {
                   {step}
                 </div>
                 {step < 4 && (
-                  <div className={`w-12 h-1 ml-4 ${
+                  <div className={`w-6 md:w-12 h-1 ml-2 md:ml-4 ${
                     currentStep > step ? 'bg-primary-500' : 'bg-gray-200'
                   }`} />
                 )}
@@ -128,13 +143,13 @@ const Catalog = () => {
           </div>
           
           {/* Progress Labels */}
-          <div className="flex justify-center mt-4 text-sm text-gray-600">
+          <div className="flex justify-center mt-4 text-xs md:text-sm text-gray-600">
             <span className={currentStep >= 1 ? 'text-primary-600 font-medium' : ''}>1. Massa</span>
-            <span className="mx-4">•</span>
+            <span className="mx-2 md:mx-4">•</span>
             <span className={currentStep >= 2 ? 'text-primary-600 font-medium' : ''}>2. Recheio</span>
-            <span className="mx-4">•</span>
+            <span className="mx-2 md:mx-4">•</span>
             <span className={currentStep >= 3 ? 'text-primary-600 font-medium' : ''}>3. Decoração</span>
-            <span className="mx-4">•</span>
+            <span className="mx-2 md:mx-4">•</span>
             <span className={currentStep >= 4 ? 'text-primary-600 font-medium' : ''}>4. Resumo</span>
           </div>
         </div>
