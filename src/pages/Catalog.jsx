@@ -90,8 +90,8 @@ const Catalog = () => {
           </p>
         </div>
 
-        {/* Progress Steps */}
-        <div className="mb-8">
+        {/* Progress Steps - Fixed */}
+        <div className="sticky top-0 bg-white shadow-sm z-10 mb-8 py-4">
           <div className="flex items-center justify-center space-x-4">
             {[1, 2, 3, 4].map((step) => (
               <div key={step} className="flex items-center">
@@ -111,13 +111,13 @@ const Catalog = () => {
             ))}
           </div>
           <div className="flex justify-center mt-4 text-sm text-gray-600">
-            <span className={currentStep >= 1 ? 'text-primary-600 font-medium' : ''}>Massa</span>
+            <span className={currentStep >= 1 ? 'text-primary-600 font-medium' : ''}>1. Massa</span>
             <span className="mx-4">•</span>
-            <span className={currentStep >= 2 ? 'text-primary-600 font-medium' : ''}>Recheio</span>
+            <span className={currentStep >= 2 ? 'text-primary-600 font-medium' : ''}>2. Recheio</span>
             <span className="mx-4">•</span>
-            <span className={currentStep >= 3 ? 'text-primary-600 font-medium' : ''}>Decoração</span>
+            <span className={currentStep >= 3 ? 'text-primary-600 font-medium' : ''}>3. Decoração</span>
             <span className="mx-4">•</span>
-            <span className={currentStep >= 4 ? 'text-primary-600 font-medium' : ''}>Resumo</span>
+            <span className={currentStep >= 4 ? 'text-primary-600 font-medium' : ''}>4. Resumo</span>
           </div>
         </div>
 
