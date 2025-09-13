@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import { getUsers, getUserStats, clearAllUsers, deleteUser } from '../utils/fileUserStorage';
+import { getUsers, getUserStats, deleteUser, debugAirtableData } from '../utils/airtableUserStorage';
 
 const Admin = () => {
   const { user, getStats } = useAuth();
@@ -18,6 +18,9 @@ const Admin = () => {
     try {
       const allUsers = await getUsers();
       const userStats = await getStats();
+      
+      console.log('🔍 Usuários carregados:', allUsers);
+      console.log('📊 Estatísticas:', userStats);
       
       setUsers(allUsers);
       setStats(userStats);
@@ -47,20 +50,23 @@ const Admin = () => {
     setUserToDelete(null);
   };
 
-  const handleClearAllUsers = async () => {
-    if (window.confirm('⚠️ ATENÇÃO: Isso irá deletar TODOS os usuários cadastrados. Tem certeza?')) {
-      const success = await clearAllUsers();
-      if (success) {
-        await loadData();
-        alert('Todos os usuários foram deletados!');
-      } else {
-        alert('Erro ao limpar usuários');
-      }
+  const handleDebugData = async () => {
+    try {
+      await debugAirtableData();
+      alert('Dados do Airtable exibidos no console do navegador!');
+    } catch (error) {
+      console.error('Erro ao debugar dados:', error);
+      alert('Erro ao debugar dados');
     }
   };
 
   const formatDate = (dateString) => {
-    return new Date(dateString).toLocaleString('pt-BR');
+    if (!dateString) return 'N/A';
+    try {
+      return new Date(dateString).toLocaleString('pt-BR');
+    } catch (error) {
+      return 'Data inválida';
+    }
   };
 
   if (loading) {
@@ -153,13 +159,13 @@ const Admin = () => {
             </button>
 
             <button
-              onClick={handleClearAllUsers}
-              className="inline-flex items-center px-4 py-2 border border-red-300 text-sm font-medium rounded-lg text-red-700 bg-red-50 hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+              onClick={handleDebugData}
+              className="inline-flex items-center px-4 py-2 border border-blue-300 text-sm font-medium rounded-lg text-blue-700 bg-blue-50 hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
             >
               <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
               </svg>
-              Limpar Todos os Usuários
+              Debug Airtable
             </button>
           </div>
         </div>
@@ -195,7 +201,7 @@ const Admin = () => {
                       Criado em
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Atualizado em
+                      Senha
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       Ações
@@ -210,22 +216,22 @@ const Admin = () => {
                           <div className="flex-shrink-0 h-10 w-10">
                             <div className="h-10 w-10 rounded-full bg-primary-100 flex items-center justify-center">
                               <span className="text-sm font-medium text-primary-600">
-                                {userData.name.charAt(0).toUpperCase()}
+                                {userData.name ? userData.name.charAt(0).toUpperCase() : '?'}
                               </span>
                             </div>
                           </div>
                           <div className="ml-4">
                             <div className="text-sm font-medium text-gray-900">
-                              {userData.name}
+                              {userData.name || 'Nome não informado'}
                             </div>
                             <div className="text-sm text-gray-500">
-                              ID: {userData.id}
+                              ID: {userData.id || 'N/A'}
                             </div>
                           </div>
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-900">{userData.email}</div>
+                        <div className="text-sm text-gray-900">{userData.email || 'Email não informado'}</div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="text-sm text-gray-900">
@@ -234,7 +240,7 @@ const Admin = () => {
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="text-sm text-gray-900">
-                          {formatDate(userData.updatedAt)}
+                          {userData.password ? '••••••' : 'N/A'}
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">

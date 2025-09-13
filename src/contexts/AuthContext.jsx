@@ -8,8 +8,8 @@ import {
   updateUser,
   logoutUser,
   getUserStats,
-  syncLocalStorageWithFiles
-} from '../utils/fileUserStorage';
+  debugAirtableData
+} from '../utils/airtableUserStorage';
 
 const AuthContext = createContext();
 
@@ -29,9 +29,6 @@ export const AuthProvider = ({ children }) => {
     // Carregar usuário ao inicializar
     const loadUser = async () => {
       try {
-        // Sincronizar dados do LocalStorage com arquivos (para desenvolvimento)
-        await syncLocalStorageWithFiles();
-        
         // Carregar usuário atual
         const savedUser = await getCurrentUser();
         if (savedUser) {
@@ -90,17 +87,16 @@ export const AuthProvider = ({ children }) => {
               password
             };
 
-            const success = await saveUser(newUser);
+            const result = await saveUser(newUser);
             
-            if (success) {
-              const savedUser = await getUserByEmail(email);
-              const { password: _, ...userWithoutPassword } = savedUser;
+            if (result.success) {
+              const { password: _, ...userWithoutPassword } = result.user;
               setUser(userWithoutPassword);
               // Salvar usuário atual na sessão
               localStorage.setItem('lumiere_cupcakes_current_user', JSON.stringify(userWithoutPassword));
               resolve(userWithoutPassword);
             } else {
-              reject(new Error('Erro ao salvar usuário'));
+              reject(new Error(result.error || 'Erro ao salvar usuário'));
             }
           } catch (error) {
             reject(error);
