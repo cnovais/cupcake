@@ -91,7 +91,23 @@ const Catalog = () => {
         </div>
 
         {/* Progress Steps - Fixed */}
-        <div className="sticky top-0 bg-white shadow-sm z-10 mb-8 py-4">
+        <div className="sticky top-0 bg-white shadow-sm z-50 mb-8 py-4">
+          {/* Back Button - Fixed */}
+          {currentStep > 1 && (
+            <div className="absolute left-4 top-1/2 transform -translate-y-1/2 z-60">
+              <button
+                onClick={() => setCurrentStep(currentStep - 1)}
+                className="flex items-center space-x-2 text-primary-600 hover:text-primary-700 transition-colors bg-primary-50 px-3 py-2 rounded-lg shadow-md hover:shadow-lg"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+                <span className="text-sm font-medium">Voltar</span>
+              </button>
+            </div>
+          )}
+          
+          {/* Progress Circles */}
           <div className="flex items-center justify-center space-x-4">
             {[1, 2, 3, 4].map((step) => (
               <div key={step} className="flex items-center">
@@ -110,6 +126,8 @@ const Catalog = () => {
               </div>
             ))}
           </div>
+          
+          {/* Progress Labels */}
           <div className="flex justify-center mt-4 text-sm text-gray-600">
             <span className={currentStep >= 1 ? 'text-primary-600 font-medium' : ''}>1. Massa</span>
             <span className="mx-4">•</span>
