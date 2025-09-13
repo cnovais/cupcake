@@ -1,9 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-
 /* Tailwind CSS */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 /* Teste básico de CSS */
 body {
@@ -39,4 +39,29 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   background: #94a3b8;
+}
+
+/* Garantir que botões sempre tenham cores corretas */
+button {
+  transition: all 0.3s ease;
+}
+
+.btn-primary {
+  background-color: #ec4899 !important;
+  color: white !important;
+  border: none !important;
+}
+
+.btn-primary:hover {
+  background-color: #db2777 !important;
+}
+
+.btn-secondary {
+  background-color: #f9fafb !important;
+  color: #374151 !important;
+  border: 1px solid #d1d5db !important;
+}
+
+.btn-secondary:hover {
+  background-color: #f3f4f6 !important;
 }

@@ -7,7 +7,7 @@ const About = () => {
       <section className="bg-gradient-to-r from-primary-500 to-pink-400 text-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl md:text-6xl font-bold mb-6">
-            Sobre a Cupcake Delícias
+            Sobre a Lumière cupcakes
           </h1>
           <p className="text-xl md:text-2xl text-primary-100 max-w-3xl mx-auto">
             Criando momentos doces e especiais há mais de uma década
@@ -31,7 +31,7 @@ const About = () => {
                   de cupcakes artesanais.
                 </p>
                 <p>
-                  Hoje, a Cupcake Delícias é uma referência em cupcakes personalizados, 
+                  Hoje, a Lumière cupcakes é uma referência em cupcakes personalizados, 
                   atendendo milhares de clientes que buscam produtos de qualidade, 
                   ingredientes frescos e muito amor em cada criação.
                 </p>
@@ -131,7 +131,7 @@ const About = () => {
               <p className="text-primary-600 font-medium mb-4">Fundadora & Chef Confeiteira</p>
               <p className="text-gray-600">
                 Apaixonada por confeitaria desde criança, Julha transformou seu sonho 
-                em realidade criando a Cupcake Delícias.
+                em realidade criando a Lumière cupcakes.
               </p>
             </div>
 

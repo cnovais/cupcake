@@ -1,4 +1,4 @@
-# 🧁 Cupcake Delícias
+# 🧁 Lumière cupcakes
 
 Uma aplicação web moderna para pedidos de cupcakes personalizados, inspirada em aplicativos de delivery como o iFood.
 

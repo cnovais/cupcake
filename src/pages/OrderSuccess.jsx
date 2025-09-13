@@ -81,7 +81,7 @@ const OrderSuccess = () => {
             </p>
             <div className="flex justify-center space-x-6 text-sm text-gray-600">
               <span>📞 (11) 99999-9999</span>
-              <span>✉️ contato@cupcakedelicias.com</span>
+              <span>✉️ contato@lumierecupcakes.com</span>
             </div>
           </div>
         </div>

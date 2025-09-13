@@ -3,12 +3,12 @@ import React from 'react';
 const Contact = () => {
   const handleWhatsAppClick = () => {
     const phoneNumber = "551147993370";
-    const message = "Olá! Gostaria de saber mais sobre os cupcakes da Cupcake Delícias!";
+    const message = "Olá! Gostaria de saber mais sobre os cupcakes da Lumière cupcakes!";
     window.open(whatsappUrl, '_blank');
   };
 
   const handleEmailClick = () => {
-    window.location.href = 'mailto:contato@cupcakedelicias.com';
+    window.location.href = 'mailto:contato@lumierecupcakes.com';
   };
 
   return (
@@ -58,7 +58,7 @@ const Contact = () => {
                   </div>
                   <div>
                     <h3 className="text-xl font-semibold text-gray-900 mb-2">Email</h3>
-                    <p className="text-gray-600 mb-4">contato@cupcakedelicias.com</p>
+                    <p className="text-gray-600 mb-4">contato@lumierecupcakes.com</p>
                     <button
                       onClick={handleEmailClick}
                       className="inline-flex items-center px-4 py-2 bg-primary-500 text-white rounded-lg hover:bg-primary-600 transition-colors"
@@ -118,7 +118,7 @@ const Contact = () => {
                   allowFullScreen=""
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
-                  title="Localização da Cupcake Delícias"
+                  title="Localização da Lumière cupcakes"
                 ></iframe>
               </div>
               

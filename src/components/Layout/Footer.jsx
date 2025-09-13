@@ -11,7 +11,7 @@ const Footer = () => {
               <div className="w-10 h-10 bg-gradient-to-r from-primary-500 to-pink-400 rounded-full flex items-center justify-center">
                 <span className="text-white font-bold text-xl">C</span>
               </div>
-              <span className="text-xl font-bold">Cupcake Delícias</span>
+              <span className="text-xl font-bold">Lumière cupcakes</span>
             </div>
             <p className="text-gray-300 mb-4">
               Criamos cupcakes únicos e deliciosos com ingredientes de primeira qualidade. 
@@ -53,14 +53,14 @@ const Footer = () => {
             <div className="space-y-2 text-gray-300">
               <p>📍 R. São João, 51 - Centro, Mogi das Cruzes</p>
               <p>📞 (11) 4799-3370</p>
-              <p>✉️ contato@cupcakedelicias.com</p>
+              <p>✉️ contato@lumierecupcakes.com</p>
               <p>🕒 Seg-Sex: 8h-18h</p>
             </div>
           </div>
         </div>
 
         <div className="border-t border-gray-700 mt-8 pt-8 text-center text-gray-300">
-          <p>&copy; 2025 Cupcake Delícias. Todos os direitos reservados.</p>
+          <p>&copy; 2025 Lumière cupcakes. Todos os direitos reservados.</p>
         </div>
       </div>
     </footer>

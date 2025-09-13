@@ -44,6 +44,18 @@ const Register = () => {
     <div className="min-h-screen bg-gradient-to-br from-primary-50 to-pink-100 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
         <div>
+          <div className="flex justify-start mb-4">
+            <Link
+              to="/"
+              className="flex items-center space-x-2 text-primary-600 hover:text-primary-700 transition-colors"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+              </svg>
+              <span className="text-sm font-medium">Voltar ao Início</span>
+            </Link>
+          </div>
+          
           <div className="mx-auto h-12 w-12 bg-gradient-to-r from-primary-500 to-pink-400 rounded-full flex items-center justify-center">
             <span className="text-white font-bold text-xl">C</span>
           </div>
@@ -142,7 +154,7 @@ const Register = () => {
             <button
               type="submit"
               disabled={loading}
-              className="mt-6 w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="btn-primary mt-6 w-full flex justify-center py-3 px-4 rounded-lg shadow-sm text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? 'Criando conta...' : 'Criar conta'}
             </button>
