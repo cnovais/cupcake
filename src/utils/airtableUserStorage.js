@@ -36,12 +36,6 @@ const airtableRequest = async (endpoint, options = {}) => {
 // Salvar usuário
 export const saveUser = async (user) => {
   try {
-    // Verificar se email já existe
-    const existingUser = await getUserByEmail(user.email);
-    if (existingUser) {
-      return { success: false, error: 'Email já cadastrado' };
-    }
-
     // Debug: ver o que está sendo enviado
     const dataToSend = {
       fields: {
@@ -54,6 +48,8 @@ export const saveUser = async (user) => {
     
     console.log('🔍 Dados sendo enviados para Airtable:', dataToSend);
     
+    // Tentar salvar diretamente no Airtable
+    // Se o email já existir, o Airtable retornará erro 422
     const result = await airtableRequest('', {
       method: 'POST',
       body: JSON.stringify(dataToSend)
@@ -75,6 +71,12 @@ export const saveUser = async (user) => {
     return { success: true, user: savedUser };
   } catch (error) {
     console.error('Erro ao salvar usuário:', error);
+    
+    // Se for erro 422, significa que o email já existe no Airtable
+    if (error.message.includes('422') || error.message.includes('INVALID_VALUE_FOR_COLUMN')) {
+      return { success: false, error: 'Email já cadastrado' };
+    }
+    
     return { success: false, error: error.message };
   }
 };
