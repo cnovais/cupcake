@@ -31,9 +31,12 @@ const Register = () => {
     }
 
     try {
+      console.log('🔍 Register: Tentando registrar usuário:', { name, email });
       await register(name, email, password);
+      console.log('✅ Register: Registro bem-sucedido, redirecionando...');
       navigate('/');
     } catch (err) {
+      console.log('❌ Register: Erro no registro:', err.message);
       setError(err.message);
     } finally {
       setLoading(false);
@@ -77,7 +80,18 @@ const Register = () => {
           <div className="bg-white p-8 rounded-lg shadow-md">
             {error && (
               <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg">
-                <p className="text-red-600 text-sm">{error}</p>
+                <div className="flex justify-between items-start">
+                  <p className="text-red-600 text-sm">{error}</p>
+                  <button
+                    type="button"
+                    onClick={() => setError('')}
+                    className="ml-2 text-red-400 hover:text-red-600 transition-colors"
+                  >
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                </div>
               </div>
             )}
             
@@ -110,7 +124,10 @@ const Register = () => {
                   autoComplete="email"
                   required
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                    if (error) setError('');
+                  }}
                   className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary-500 focus:border-primary-500"
                   placeholder="seu@email.com"
                 />

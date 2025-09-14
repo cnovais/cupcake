@@ -74,35 +74,36 @@ export const AuthProvider = ({ children }) => {
       try {
         setTimeout(async () => {
           try {
-            // Verificar se email já existe
-            const emailExists = await isEmailRegistered(email);
-            if (emailExists) {
-              reject(new Error('Email já cadastrado'));
-              return;
-            }
-
+            console.log('🔍 AuthContext: Iniciando registro para:', email);
+            
             const newUser = {
               name,
               email,
               password
             };
 
+            console.log('🔍 AuthContext: Chamando saveUser...');
             const result = await saveUser(newUser);
+            console.log('🔍 AuthContext: Resultado do saveUser:', result);
             
             if (result.success) {
               const { password: _, ...userWithoutPassword } = result.user;
               setUser(userWithoutPassword);
               // Salvar usuário atual na sessão
               localStorage.setItem('lumiere_cupcakes_current_user', JSON.stringify(userWithoutPassword));
+              console.log('✅ AuthContext: Usuário registrado com sucesso');
               resolve(userWithoutPassword);
             } else {
+              console.log('❌ AuthContext: Erro no registro:', result.error);
               reject(new Error(result.error || 'Erro ao salvar usuário'));
             }
           } catch (error) {
+            console.log('❌ AuthContext: Exceção no registro:', error);
             reject(error);
           }
         }, 1000);
       } catch (error) {
+        console.log('❌ AuthContext: Exceção externa:', error);
         reject(error);
       }
     });
