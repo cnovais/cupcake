@@ -23,6 +23,15 @@ const airtableRequest = async (endpoint, options = {}) => {
     if (!response.ok) {
       const errorText = await response.text();
       console.error(`❌ Erro HTTP ${response.status}:`, errorText);
+      
+      // Parse do erro para verificar se é email duplicado
+      let errorData = null;
+      try {
+        errorData = JSON.parse(errorText);
+      } catch (e) {
+        // Se não conseguir fazer parse, usar texto como está
+      }
+      
       throw new Error(`HTTP error! status: ${response.status} - ${errorText}`);
     }
 
@@ -36,6 +45,17 @@ const airtableRequest = async (endpoint, options = {}) => {
 // Salvar usuário
 export const saveUser = async (user) => {
   try {
+    console.log('🔍 Iniciando cadastro para email:', user.email);
+    
+    // Verificar se email já existe no Airtable
+    const existingUser = await getUserByEmail(user.email);
+    if (existingUser) {
+      console.log('❌ Email já existe no Airtable:', existingUser);
+      return { success: false, error: 'Email já cadastrado' };
+    }
+    
+    console.log('✅ Email não existe no Airtable, prosseguindo com cadastro');
+    
     // Debug: ver o que está sendo enviado
     const dataToSend = {
       fields: {
@@ -47,13 +67,15 @@ export const saveUser = async (user) => {
     };
     
     console.log('🔍 Dados sendo enviados para Airtable:', dataToSend);
+    console.log('🔍 URL da requisição:', AIRTABLE_URL);
     
-    // Tentar salvar diretamente no Airtable
-    // Se o email já existir, o Airtable retornará erro 422
+    // Salvar no Airtable
     const result = await airtableRequest('', {
       method: 'POST',
       body: JSON.stringify(dataToSend)
     });
+    
+    console.log('✅ Sucesso ao salvar no Airtable:', result);
 
     const savedUser = {
       id: result.id,
@@ -72,12 +94,20 @@ export const saveUser = async (user) => {
   } catch (error) {
     console.error('Erro ao salvar usuário:', error);
     
-    // Se for erro 422, significa que o email já existe no Airtable
-    if (error.message.includes('422') || error.message.includes('INVALID_VALUE_FOR_COLUMN')) {
+    // Verificar diferentes tipos de erro que indicam email duplicado
+    const errorMessage = error.message.toLowerCase();
+    const isDuplicateEmail = 
+      errorMessage.includes('422') || 
+      errorMessage.includes('invalid_value_for_column') ||
+      errorMessage.includes('email') ||
+      errorMessage.includes('duplicate') ||
+      errorMessage.includes('already exists');
+    
+    if (isDuplicateEmail) {
       return { success: false, error: 'Email já cadastrado' };
     }
     
-    return { success: false, error: error.message };
+    return { success: false, error: 'Erro interno do sistema. Tente novamente.' };
   }
 };
 
@@ -109,19 +139,26 @@ export const getUsers = async () => {
 // Buscar usuário por email
 export const getUserByEmail = async (email) => {
   try {
+    console.log('🔍 Buscando usuário por email:', email);
     const result = await airtableRequest(`?filterByFormula={email}="${email}"`);
+    
+    console.log('🔍 Resultado da busca:', result);
+    console.log('🔍 Registros encontrados:', result.records.length);
     
     if (result.records.length > 0) {
       const record = result.records[0];
-      return {
+      const user = {
         id: record.id,
         name: record.fields.name,
         email: record.fields.email,
         password: record.fields.password,
         createdAt: record.fields.createdAt
       };
+      console.log('✅ Usuário encontrado:', user);
+      return user;
     }
     
+    console.log('✅ Usuário não encontrado');
     return null;
   } catch (error) {
     console.error('Erro ao buscar usuário por email:', error);
