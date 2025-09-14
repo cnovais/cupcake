@@ -43,7 +43,9 @@ export default async function handler(req, res) {
     console.log('🔄 Proxy Airtable:', {
       method: options.method,
       url,
-      hasData: !!data
+      hasData: !!data,
+      endpoint: endpoint,
+      dataKeys: data ? Object.keys(data) : null
     });
 
     // Fazer requisição para Airtable
@@ -63,7 +65,11 @@ export default async function handler(req, res) {
     // Retornar dados
     const result = await response.json();
     
-    console.log('✅ Sucesso no proxy Airtable');
+    console.log('✅ Sucesso no proxy Airtable:', {
+      status: response.status,
+      resultKeys: Object.keys(result),
+      recordsCount: result.records ? result.records.length : 'N/A'
+    });
     return res.status(200).json(result);
 
   } catch (error) {

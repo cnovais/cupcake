@@ -9,7 +9,7 @@ const AIRTABLE_TABLE_NAME = 'Users'; // Nome da tabela no Airtable
 const AIRTABLE_URL = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${AIRTABLE_TABLE_NAME}`;
 
 // Usar proxy para contornar CORS em dispositivos móveis
-const USE_PROXY = false; // Vamos testar sem proxy primeiro
+const USE_PROXY = true; // Voltando para proxy
 const PROXY_URL = '/api/airtable-proxy';
 
 // Função auxiliar para fazer requisições HTTP
