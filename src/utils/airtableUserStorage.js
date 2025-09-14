@@ -64,10 +64,10 @@ export const saveUser = async (user) => {
       name: user.name,
       email: user.email,
       password: user.password,
-      createdAt: new Date().toISOString() // Adicionado localmente
+      createdAt: new Date().toISOString()
     };
 
-    // Salvar também no LocalStorage como backup
+    // Só salvar no LocalStorage APÓS sucesso no Airtable
     const users = JSON.parse(localStorage.getItem('lumiere_cupcakes_users') || '[]');
     users.push(savedUser);
     localStorage.setItem('lumiere_cupcakes_users', JSON.stringify(users));
@@ -92,7 +92,7 @@ export const getUsers = async () => {
       createdAt: record.fields.createdAt
     }));
 
-    // Salvar no LocalStorage como backup
+    // Atualizar LocalStorage com dados do Airtable (sincronizar)
     localStorage.setItem('lumiere_cupcakes_users', JSON.stringify(users));
     
     return users;
@@ -130,8 +130,9 @@ export const getUserByEmail = async (email) => {
 // Verificar se email já está cadastrado
 export const isEmailRegistered = async (email) => {
   try {
-    const user = await getUserByEmail(email);
-    return !!user;
+    // Buscar diretamente no Airtable
+    const result = await airtableRequest(`?filterByFormula={email}="${email}"`);
+    return result.records.length > 0;
   } catch (error) {
     console.error('Erro ao verificar email:', error);
     return false;
@@ -168,7 +169,12 @@ export const getCurrentUser = async () => {
 // Fazer logout
 export const logoutUser = async () => {
   try {
+    // Remover usuário atual logado
     localStorage.removeItem('lumiere_cupcakes_current_user');
+    
+    // Limpar backup de usuários (opcional - comentado para manter dados)
+    // localStorage.removeItem('lumiere_cupcakes_users');
+    
     return true;
   } catch (error) {
     console.error('Erro ao fazer logout:', error);
@@ -253,6 +259,34 @@ export const getUserStats = async () => {
   }
 };
 
+// Função para limpar dados inconsistentes
+export const clearInconsistentData = async () => {
+  try {
+    // Buscar usuários do Airtable
+    const airtableUsers = await getUsers();
+    const airtableEmails = airtableUsers.map(user => user.email);
+    
+    // Buscar usuários do LocalStorage
+    const localUsers = JSON.parse(localStorage.getItem('lumiere_cupcakes_users') || '[]');
+    
+    // Filtrar apenas usuários que existem no Airtable
+    const consistentUsers = localUsers.filter(user => 
+      airtableEmails.includes(user.email)
+    );
+    
+    // Atualizar LocalStorage com dados consistentes
+    localStorage.setItem('lumiere_cupcakes_users', JSON.stringify(consistentUsers));
+    
+    console.log('✅ Dados inconsistentes removidos');
+    console.log('📊 Usuários consistentes:', consistentUsers);
+    
+    return consistentUsers;
+  } catch (error) {
+    console.error('Erro ao limpar dados inconsistentes:', error);
+    return [];
+  }
+};
+
 // Função para debugar dados do Airtable
 export const debugAirtableData = async () => {
   try {
@@ -265,9 +299,14 @@ export const debugAirtableData = async () => {
     console.log('  - Usuários:', users);
     console.log('  - Usuário atual:', currentUser);
     
-    return { users, currentUser };
+    // Mostrar dados do LocalStorage também
+    const localUsers = JSON.parse(localStorage.getItem('lumiere_cupcakes_users') || '[]');
+    console.log('📱 Dados do LocalStorage:');
+    console.log('  - Usuários:', localUsers);
+    
+    return { users, currentUser, localUsers };
   } catch (error) {
     console.error('Erro ao debugar dados do Airtable:', error);
-    return { users: [], currentUser: null };
+    return { users: [], currentUser: null, localUsers: [] };
   }
 };
