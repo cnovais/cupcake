@@ -9,7 +9,7 @@ const AIRTABLE_TABLE_NAME = 'Users'; // Nome da tabela no Airtable
 const AIRTABLE_URL = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${AIRTABLE_TABLE_NAME}`;
 
 // Usar proxy para contornar CORS em dispositivos móveis
-const USE_PROXY = true;
+const USE_PROXY = false; // Vamos testar sem proxy primeiro
 const PROXY_URL = '/api/airtable-proxy';
 
 // Função auxiliar para fazer requisições HTTP
@@ -380,6 +380,40 @@ export const testAirtableConnection = async () => {
     return { success: true, result };
   } catch (error) {
     console.error('❌ Erro na conexão com Airtable:', error);
+    return { success: false, error: error.message };
+  }
+};
+
+// Função para testar cadastro direto (para debug)
+export const testDirectRegistration = async (email) => {
+  try {
+    console.log('🔍 === TESTE DIRETO DE CADASTRO ===');
+    console.log('🔍 Email para testar:', email);
+    
+    // 1. Verificar se email existe
+    console.log('🔍 1. Verificando se email existe...');
+    const existingUser = await getUserByEmail(email);
+    console.log('🔍 Resultado da verificação:', existingUser);
+    
+    if (existingUser) {
+      console.log('❌ Email já existe!');
+      return { success: false, error: 'Email já cadastrado' };
+    }
+    
+    // 2. Tentar cadastrar
+    console.log('🔍 2. Tentando cadastrar usuário de teste...');
+    const testUser = {
+      name: 'Teste Debug',
+      email: email,
+      password: '123456'
+    };
+    
+    const result = await saveUser(testUser);
+    console.log('🔍 Resultado do cadastro:', result);
+    
+    return result;
+  } catch (error) {
+    console.error('❌ Erro no teste direto:', error);
     return { success: false, error: error.message };
   }
 };

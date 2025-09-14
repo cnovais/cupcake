@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import { getUsers, getUserStats, deleteUser, debugAirtableData, clearInconsistentData, testAirtableConnection } from '../utils/airtableUserStorage';
+import { getUsers, getUserStats, deleteUser, debugAirtableData, clearInconsistentData, testAirtableConnection, testDirectRegistration } from '../utils/airtableUserStorage';
 
 const Admin = () => {
   const { user, getStats } = useAuth();
@@ -97,6 +97,19 @@ const Admin = () => {
     } catch (error) {
       console.error('Erro ao testar conexão:', error);
       alert('Erro ao testar conexão');
+    }
+  };
+
+  const handleTestRegistration = async () => {
+    const email = prompt('Digite um email para testar o cadastro:');
+    if (email) {
+      try {
+        await testDirectRegistration(email);
+        alert('Teste de cadastro executado! Veja o console para detalhes.');
+      } catch (error) {
+        console.error('Erro ao testar cadastro:', error);
+        alert('Erro ao testar cadastro');
+      }
     }
   };
 
@@ -305,6 +318,16 @@ const Admin = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
               Testar Conexão Airtable
+            </button>
+
+            <button
+              onClick={handleTestRegistration}
+              className="inline-flex items-center px-4 py-2 border border-blue-300 text-sm font-medium rounded-lg text-blue-700 bg-blue-50 hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+            >
+              <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+              </svg>
+              Testar Cadastro Direto
             </button>
           </div>
         </div>
