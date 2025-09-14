@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import { getUsers, getUserStats, deleteUser, debugAirtableData, clearInconsistentData } from '../utils/airtableUserStorage';
+import { getUsers, getUserStats, deleteUser, debugAirtableData, clearInconsistentData, testAirtableConnection } from '../utils/airtableUserStorage';
 
 const Admin = () => {
   const { user, getStats } = useAuth();
@@ -87,6 +87,16 @@ const Admin = () => {
         console.error('Erro ao limpar dados inconsistentes:', error);
         alert('Erro ao limpar dados inconsistentes');
       }
+    }
+  };
+
+  const handleTestConnection = async () => {
+    try {
+      await testAirtableConnection();
+      alert('Teste de conexão executado! Veja o console para detalhes.');
+    } catch (error) {
+      console.error('Erro ao testar conexão:', error);
+      alert('Erro ao testar conexão');
     }
   };
 
@@ -285,6 +295,16 @@ const Admin = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
               </svg>
               Limpar Dados Inconsistentes
+            </button>
+
+            <button
+              onClick={handleTestConnection}
+              className="inline-flex items-center px-4 py-2 border border-green-300 text-sm font-medium rounded-lg text-green-700 bg-green-50 hover:bg-green-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+            >
+              <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              Testar Conexão Airtable
             </button>
           </div>
         </div>

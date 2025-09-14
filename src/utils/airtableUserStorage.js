@@ -8,17 +8,44 @@ const AIRTABLE_TABLE_NAME = 'Users'; // Nome da tabela no Airtable
 
 const AIRTABLE_URL = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${AIRTABLE_TABLE_NAME}`;
 
+// Usar proxy para contornar CORS em dispositivos móveis
+const USE_PROXY = true;
+const PROXY_URL = '/api/airtable-proxy';
+
 // Função auxiliar para fazer requisições HTTP
 const airtableRequest = async (endpoint, options = {}) => {
   try {
-    const response = await fetch(`${AIRTABLE_URL}${endpoint}`, {
-      headers: {
-        'Authorization': `Bearer ${AIRTABLE_API_KEY}`,
-        'Content-Type': 'application/json',
-        ...options.headers
-      },
-      ...options
-    });
+    let response;
+    
+    if (USE_PROXY) {
+      // Usar proxy para contornar CORS
+      console.log('🔄 Usando proxy para contornar CORS');
+      
+      const proxyData = {
+        method: options.method || 'GET',
+        endpoint: endpoint,
+        data: options.body ? JSON.parse(options.body) : undefined
+      };
+      
+      response = await fetch(PROXY_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          ...options.headers
+        },
+        body: JSON.stringify(proxyData)
+      });
+    } else {
+      // Requisição direta (funciona no desktop)
+      response = await fetch(`${AIRTABLE_URL}${endpoint}`, {
+        headers: {
+          'Authorization': `Bearer ${AIRTABLE_API_KEY}`,
+          'Content-Type': 'application/json',
+          ...options.headers
+        },
+        ...options
+      });
+    }
 
     if (!response.ok) {
       const errorText = await response.text();
@@ -46,8 +73,14 @@ const airtableRequest = async (endpoint, options = {}) => {
 export const saveUser = async (user) => {
   try {
     console.log('🔍 Iniciando cadastro para email:', user.email);
+    console.log('🔍 Configuração Airtable:');
+    console.log('  - API Key:', AIRTABLE_API_KEY ? '✅ Configurada' : '❌ Não configurada');
+    console.log('  - Base ID:', AIRTABLE_BASE_ID);
+    console.log('  - Table Name:', AIRTABLE_TABLE_NAME);
+    console.log('  - URL:', AIRTABLE_URL);
     
     // Verificar se email já existe no Airtable
+    console.log('🔍 Verificando se email já existe...');
     const existingUser = await getUserByEmail(user.email);
     if (existingUser) {
       console.log('❌ Email já existe no Airtable:', existingUser);
@@ -67,9 +100,9 @@ export const saveUser = async (user) => {
     };
     
     console.log('🔍 Dados sendo enviados para Airtable:', dataToSend);
-    console.log('🔍 URL da requisição:', AIRTABLE_URL);
     
     // Salvar no Airtable
+    console.log('🔍 Enviando requisição para Airtable...');
     const result = await airtableRequest('', {
       method: 'POST',
       body: JSON.stringify(dataToSend)
@@ -323,6 +356,31 @@ export const clearInconsistentData = async () => {
   } catch (error) {
     console.error('Erro ao limpar dados inconsistentes:', error);
     return [];
+  }
+};
+
+// Função para testar conexão com Airtable
+export const testAirtableConnection = async () => {
+  try {
+    console.log('🔍 === TESTE DE CONEXÃO AIRTABLE ===');
+    console.log('🔍 Configuração:');
+    console.log('  - API Key:', AIRTABLE_API_KEY ? '✅ Configurada' : '❌ Não configurada');
+    console.log('  - Base ID:', AIRTABLE_BASE_ID);
+    console.log('  - Table Name:', AIRTABLE_TABLE_NAME);
+    console.log('  - URL:', AIRTABLE_URL);
+    console.log('  - Usando Proxy:', USE_PROXY ? '✅ Sim' : '❌ Não');
+    console.log('  - Proxy URL:', PROXY_URL);
+    
+    // Testar requisição simples
+    console.log('🔍 Testando requisição GET...');
+    const result = await airtableRequest('?maxRecords=1');
+    console.log('✅ Conexão com Airtable funcionando!');
+    console.log('📊 Resultado:', result);
+    
+    return { success: true, result };
+  } catch (error) {
+    console.error('❌ Erro na conexão com Airtable:', error);
+    return { success: false, error: error.message };
   }
 };
 

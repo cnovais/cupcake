@@ -1,8 +1,13 @@
 {
+  "functions": {
+    "api/airtable-proxy.js": {
+      "maxDuration": 10
+    }
+  },
   "rewrites": [
     {
-      "source": "/(.*)",
-      "destination": "/index.html"
+      "source": "/api/airtable-proxy",
+      "destination": "/api/airtable-proxy.js"
     }
   ]
 }
