@@ -8,6 +8,10 @@
     {
       "source": "/api/airtable-proxy",
       "destination": "/api/airtable-proxy.js"
+    },
+    {
+      "source": "/((?!api/).*)",
+      "destination": "/index.html"
     }
   ]
 }
