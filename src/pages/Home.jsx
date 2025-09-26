@@ -1,17 +1,24 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import fotoHome1 from '../assets/foto_home1.jpg';
 
 const Home = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-primary-500 to-pink-400 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+      <section 
+        className="relative bg-cover bg-center bg-no-repeat text-white"
+        style={{ backgroundImage: `url(${fotoHome1})` }}
+      >
+        {/* Overlay para escurecer o fundo e melhorar legibilidade */}
+        <div className="absolute inset-0 bg-black bg-opacity-40"></div>
+        
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
           <div className="text-center">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">
+            <h1 className="text-4xl md:text-6xl font-bold mb-6 text-white">
               Cupcakes Deliciosos
             </h1>
-            <p className="text-xl md:text-2xl mb-8 text-primary-100">
+            <p className="text-xl md:text-2xl mb-8 text-gray-100">
               Feitos com amor e ingredientes de primeira qualidade
             </p>
             <Link
