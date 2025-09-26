@@ -184,8 +184,12 @@ const Catalog = () => {
                   onClick={() => handleCakeSelect(cake)}
                   className="cursor-pointer border-2 border-gray-200 rounded-lg p-6 hover:border-primary-500 hover:shadow-lg transition-all"
                 >
-                  <div className="w-full h-48 bg-gray-200 rounded-lg mb-4 flex items-center justify-center">
-                    <span className="text-gray-500">Imagem do {cake.name}</span>
+                  <div className="w-full h-48 rounded-lg mb-4 overflow-hidden">
+                    <img 
+                      src={cake.image} 
+                      alt={cake.name}
+                      className="w-full h-full object-cover"
+                    />
                   </div>
                   <h3 className="text-lg font-semibold text-gray-900 mb-2">{cake.name}</h3>
                   <p className="text-gray-600 mb-4">{cake.description}</p>
@@ -236,8 +240,12 @@ const Catalog = () => {
                         : 'border-gray-200 hover:border-primary-500 hover:shadow-lg'
                     }`}
                   >
-                    <div className="w-full h-32 bg-gray-200 rounded-lg mb-3 flex items-center justify-center">
-                      <span className="text-gray-500 text-sm">Imagem do {filling.name}</span>
+                    <div className="w-full h-32 rounded-lg mb-3 overflow-hidden">
+                      <img 
+                        src={filling.image} 
+                        alt={filling.name}
+                        className="w-full h-full object-cover"
+                      />
                     </div>
                     <h3 className="font-semibold text-gray-900 mb-1">{filling.name}</h3>
                     <p className="text-sm text-gray-600 mb-2">{filling.description}</p>
@@ -301,8 +309,12 @@ const Catalog = () => {
                         : 'border-gray-200 bg-gray-50 opacity-50 cursor-not-allowed'
                     }`}
                   >
-                  <div className="w-full h-32 bg-gray-200 rounded-lg mb-3 flex items-center justify-center">
-                    <span className="text-gray-500 text-sm">Imagem da {decoration.name}</span>
+                  <div className="w-full h-32 rounded-lg mb-3 overflow-hidden">
+                    <img 
+                      src={decoration.image} 
+                      alt={decoration.name}
+                      className="w-full h-full object-cover"
+                    />
                   </div>
                   <h3 className="font-semibold text-gray-900 mb-1">{decoration.name}</h3>
                   <p className="text-sm text-gray-600 mb-2">{decoration.description}</p>
