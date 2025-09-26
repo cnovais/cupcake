@@ -53,7 +53,8 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4">Contato</h3>
             <div className="space-y-2 text-gray-300">
-              <p>📍 R. São João, 51 - Centro, Mogi das Cruzes</p>
+            , 38 - Centro, Mogi das Cruzes - SP
+              <p>📍 Rua João Cardoso de Siqueira Primo, 38 - Centro, Mogi das Cruzes</p>
               <p>📞 (11) 4799-3370</p>
               <p>✉️ contato@lumierecupcakes.com</p>
               <p>🕒 Seg-Sex: 8h-18h</p>

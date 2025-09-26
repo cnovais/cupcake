@@ -82,7 +82,7 @@ const Contact = () => {
                   </div>
                   <div>
                     <h3 className="text-xl font-semibold text-gray-900 mb-2">Endereço</h3>
-                    <p className="text-gray-600">R. São João, 51 - Centro</p>
+                    <p className="text-gray-600">Rua João Cardoso de Siqueira Primo, 38 - Centro</p>
                     <p className="text-gray-600">Mogi das Cruzes - SP</p>
                   </div>
                 </div>
@@ -112,7 +112,7 @@ const Contact = () => {
               
               <div className="bg-gray-200 rounded-lg overflow-hidden shadow-lg">
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3659.5!2d-46.1885!3d-23.5225!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94cdd3d0c8b8b8b8%3A0x8b8b8b8b8b8b8b8b!2sR.%20S%C3%A3o%20Jo%C3%A3o%2C%2051%20-%20Centro%2C%20Mogi%20das%20Cruzes%20-%20SP!5e0!3m2!1spt-BR!2sbr!4v1234567890123!5m2!1spt-BR!2sbr"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3659.5!2d-46.1885!3d-23.5225!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94cdd3d0c8b8b8b8%3A0x8b8b8b8b8b8b8b8b!2sRua%20Jo%C3%A3o%20Cardoso%20de%20Siqueira%20Primo%2C%2038%20-%20Centro%2C%20Mogi%20das%20Cruzes%20-%20SP!5e0!3m2!1spt-BR!2sbr!4v1234567890123!5m2!1spt-BR!2sbr"
                   width="100%"
                   height="400"
                   style={{ border: 0 }}

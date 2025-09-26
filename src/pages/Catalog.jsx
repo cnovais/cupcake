@@ -7,13 +7,13 @@ const Catalog = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [selectedCake, setSelectedCake] = useState(null);
   const [selectedFillings, setSelectedFillings] = useState([]);
-  const [selectedDecoration, setSelectedDecoration] = useState(null);
+  const [selectedDecorations, setSelectedDecorations] = useState([]);
   const [customCupcake, setCustomCupcake] = useState(null);
 
   const { addToCart } = useCart();
   const navigate = useNavigate();
 
-  const maxFillings = 5;
+  const maxFillings = 1;
 
   const handleCakeSelect = (cake) => {
     setSelectedCake(cake);
@@ -24,36 +24,42 @@ const Catalog = () => {
     setSelectedFillings(prev => {
       const isSelected = prev.find(f => f.id === filling.id);
       if (isSelected) {
-        return prev.filter(f => f.id !== filling.id);
-      } else if (prev.length < maxFillings) {
-        return [...prev, filling];
+        return []; // Remove se já estiver selecionado
+      } else {
+        return [filling]; // Seleciona apenas este (substitui qualquer seleção anterior)
       }
-      return prev;
     });
   };
 
-  const handleDecorationSelect = (decoration) => {
-    setSelectedDecoration(decoration);
-    setCurrentStep(4);
+  const handleDecorationToggle = (decoration) => {
+    setSelectedDecorations(prev => {
+      const isSelected = prev.find(d => d.id === decoration.id);
+      if (isSelected) {
+        return prev.filter(d => d.id !== decoration.id); // Remove se já estiver selecionado
+      } else if (prev.length < 2) {
+        return [...prev, decoration]; // Adiciona se ainda não atingiu o limite de 2
+      }
+      return prev; // Não faz nada se já atingiu o limite
+    });
   };
 
   const calculateTotal = () => {
     let total = 0;
     if (selectedCake) total += selectedCake.price;
     selectedFillings.forEach(filling => total += filling.price);
-    if (selectedDecoration) total += selectedDecoration.price;
+    selectedDecorations.forEach(decoration => total += decoration.price);
     return total;
   };
 
   const createCustomCupcake = () => {
-    if (!selectedCake || !selectedDecoration) return;
+    if (!selectedCake || selectedDecorations.length === 0) return;
 
     const cupcake = {
       id: `cupcake_${Date.now()}`,
-      name: `${selectedCake.name} com ${selectedFillings.length > 0 ? selectedFillings.map(f => f.name).join(', ') + ' e ' : ''}${selectedDecoration.name}`,
+      name: `${selectedCake.name} com ${selectedFillings.length > 0 ? selectedFillings.map(f => f.name).join(', ') + ' e ' : ''}${selectedDecorations.map(d => d.name).join(', ')}`,
       cake: selectedCake,
       fillings: selectedFillings,
-      decoration: selectedDecoration,
+      decorations: selectedDecorations,
       price: calculateTotal(),
       quantity: 1,
       custom: true
@@ -197,7 +203,7 @@ const Catalog = () => {
           <div className="bg-white rounded-lg shadow-md p-6">
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-2xl font-bold text-gray-900">
-                Escolha os recheios (até {maxFillings})
+                Escolha a cobertura
               </h2>
               <button
                 onClick={() => setCurrentStep(1)}
@@ -212,25 +218,22 @@ const Catalog = () => {
             
             <div className="mb-4">
               <span className="text-sm text-gray-600">
-                Selecionados: {selectedFillings.length}/{maxFillings}
+                {selectedFillings.length > 0 ? 'Cobertura selecionada' : 'Nenhuma cobertura selecionada'}
               </span>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {fillings.map((filling) => {
                 const isSelected = selectedFillings.find(f => f.id === filling.id);
-                const canSelect = selectedFillings.length < maxFillings || isSelected;
                 
                 return (
                   <div
                     key={filling.id}
-                    onClick={() => canSelect && handleFillingToggle(filling)}
+                    onClick={() => handleFillingToggle(filling)}
                     className={`cursor-pointer border-2 rounded-lg p-4 transition-all ${
                       isSelected
                         ? 'border-primary-500 bg-primary-50'
-                        : canSelect
-                        ? 'border-gray-200 hover:border-primary-500 hover:shadow-lg'
-                        : 'border-gray-200 bg-gray-50 opacity-50 cursor-not-allowed'
+                        : 'border-gray-200 hover:border-primary-500 hover:shadow-lg'
                     }`}
                   >
                     <div className="w-full h-32 bg-gray-200 rounded-lg mb-3 flex items-center justify-center">
@@ -262,7 +265,7 @@ const Catalog = () => {
           <div className="bg-white rounded-lg shadow-md p-6">
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-2xl font-bold text-gray-900">
-                Escolha a decoração
+                Escolha os Toppings (até 2)
               </h2>
               <button
                 onClick={() => setCurrentStep(2)}
@@ -275,13 +278,29 @@ const Catalog = () => {
               </button>
             </div>
 
+            <div className="mb-4">
+              <span className="text-sm text-gray-600">
+                Selecionados: {selectedDecorations.length}/2
+              </span>
+            </div>
+
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {decorations.map((decoration) => (
-                <div
-                  key={decoration.id}
-                  onClick={() => handleDecorationSelect(decoration)}
-                  className="cursor-pointer border-2 border-gray-200 rounded-lg p-4 hover:border-primary-500 hover:shadow-lg transition-all"
-                >
+              {decorations.map((decoration) => {
+                const isSelected = selectedDecorations.find(d => d.id === decoration.id);
+                const canSelect = selectedDecorations.length < 2 || isSelected;
+                
+                return (
+                  <div
+                    key={decoration.id}
+                    onClick={() => canSelect && handleDecorationToggle(decoration)}
+                    className={`cursor-pointer border-2 rounded-lg p-4 transition-all ${
+                      isSelected
+                        ? 'border-primary-500 bg-primary-50'
+                        : canSelect
+                        ? 'border-gray-200 hover:border-primary-500 hover:shadow-lg'
+                        : 'border-gray-200 bg-gray-50 opacity-50 cursor-not-allowed'
+                    }`}
+                  >
                   <div className="w-full h-32 bg-gray-200 rounded-lg mb-3 flex items-center justify-center">
                     <span className="text-gray-500 text-sm">Imagem da {decoration.name}</span>
                   </div>
@@ -291,7 +310,17 @@ const Catalog = () => {
                     R$ {decoration.price.toFixed(2)}
                   </div>
                 </div>
-              ))}
+                );
+              })}
+            </div>
+
+            <div className="mt-6 text-center">
+              <button
+                onClick={() => setCurrentStep(4)}
+                className="bg-primary-500 text-white px-8 py-3 rounded-lg hover:bg-primary-600 transition-colors"
+              >
+                Continuar
+              </button>
             </div>
           </div>
         )}
@@ -337,14 +366,18 @@ const Catalog = () => {
                 </div>
               )}
 
-              {/* Decoration */}
-              <div className="border-b pb-4">
-                <h3 className="font-semibold text-gray-900 mb-2">Toppings:</h3>
-                <div className="flex justify-between items-center">
-                  <span>{selectedDecoration.name}</span>
-                  <span className="font-semibold">R$ {selectedDecoration.price.toFixed(2)}</span>
+              {/* Decorations */}
+              {selectedDecorations.length > 0 && (
+                <div className="border-b pb-4">
+                  <h3 className="font-semibold text-gray-900 mb-2">Toppings:</h3>
+                  {selectedDecorations.map((decoration) => (
+                    <div key={decoration.id} className="flex justify-between items-center mb-1">
+                      <span>{decoration.name}</span>
+                      <span className="font-semibold">R$ {decoration.price.toFixed(2)}</span>
+                    </div>
+                  ))}
                 </div>
-              </div>
+              )}
 
               {/* Total */}
               <div className="bg-gray-50 p-4 rounded-lg">

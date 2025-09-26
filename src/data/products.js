@@ -70,44 +70,44 @@ export const fillings = [
 export const decorations = [
   {
     id: 'buttercream',
-    name: 'Buttercream',
-    description: 'Cobertura cremosa de manteiga',
-    price: 12.00,
+    name: 'Granulado',
+    description: 'Granulados de chocolate',
+    price: 0.50,
     image: '/api/placeholder/150/150'
   },
   {
     id: 'fondant',
-    name: 'Fondant',
-    description: 'Cobertura lisa e elegante',
-    price: 15.00,
+    name: 'Marshmallow',
+    description: 'Marshmallows macios e deliciosos',
+    price: 1.00,
     image: '/api/placeholder/150/150'
   },
   {
     id: 'chocolate-drip',
-    name: 'Drip de Chocolate',
-    description: 'Chocolate derretido escorrendo',
-    price: 14.00,
+    name: 'Biscoito',
+    description: 'Biscoitos triturados por cima do cupcake ',
+    price: 1.00,
     image: '/api/placeholder/150/150'
   },
   {
     id: 'fresh-fruits',
-    name: 'Frutas Frescas',
-    description: 'Toppings com frutas da estação',
-    price: 16.00,
+    name: 'Morangos',
+    description: 'Morangos cortados em cubos',
+    price: 2.00,
     image: '/api/placeholder/150/150'
   },
   {
     id: 'sprinkles',
-    name: 'Granulados Coloridos',
-    description: 'Granulados e confeitos coloridos',
-    price: 8.00,
+    name: 'Banana',
+    description: 'Banana cortada em fatias',
+    price: 2.00,
     image: '/api/placeholder/150/150'
   },
   {
     id: 'nuts',
-    name: 'Nozes e Amêndoas',
-    description: 'Nozes trituradas e amêndoas',
-    price: 11.00,
+    name: 'Caramelo',
+    description: 'Caramelo derretido por cima do cupcake',
+    price: 2.00,
     image: '/api/placeholder/150/150'
   }
 ];

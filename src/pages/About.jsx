@@ -26,8 +26,8 @@ const About = () => {
               </h2>
               <div className="space-y-4 text-lg text-gray-600">
                 <p>
-                  Tudo começou em uma pequena cozinha de casa, onde nossa fundadora Maria descobriu 
-                  sua paixão por criar cupcakes únicos e deliciosos. O que era apenas um hobby 
+                  Tudo começou em uma pequena cozinha de casa, onde nossa fundadora Larissa descobriu 
+                  sua paixão por criar cupcakes únicos e deliciosos com seus amigos. O que era apenas um hobby 
                   se transformou em um sonho: levar alegria e doçura para as pessoas através 
                   de cupcakes artesanais.
                 </p>
@@ -126,40 +126,57 @@ const About = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <div className="text-center">
               <div className="w-32 h-32 bg-gradient-to-br from-primary-100 to-pink-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                <span className="text-primary-600 font-bold text-4xl">M</span>
+                <span className="text-primary-600 font-bold text-4xl">Ju</span>
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Julha Oliveira Novais</h3>
-              <p className="text-primary-600 font-medium mb-4">Fundadora & Chef Confeiteira</p>
-              <p className="text-gray-600">
-                Apaixonada por confeitaria desde criança, Julha transformou seu sonho 
-                em realidade criando a Lumière cupcakes.
-              </p>
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">Julha</h3>
+              <p className="text-primary-600 font-medium mb-4">Proprietária & Contadora</p>
             </div>
 
             <div className="text-center">
-              <div className="w-32 h-32 bg-gradient-to-br from-gold-100 to-yellow-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                <span className="text-gold-600 font-bold text-4xl">A</span>
+              <div className="w-32 h-32 bg-gradient-to-br from-primary-100 to-pink-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <span className="text-primary-600 font-bold text-4xl">La</span>
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Ana Costa</h3>
-              <p className="text-primary-600 font-medium mb-4">Especialista em Toppings</p>
-              <p className="text-gray-600">
-                Ana é responsável por transformar nossos cupcakes em verdadeiras 
-                obras de arte com suas decorações únicas.
-              </p>
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">Larissa</h3>
+              <p className="text-primary-600 font-medium mb-4">Proprietária & Gerente</p>
             </div>
 
             <div className="text-center">
-              <div className="w-32 h-32 bg-gradient-to-br from-blue-100 to-cyan-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                <span className="text-blue-600 font-bold text-4xl">C</span>
+              <div className="w-32 h-32 bg-gradient-to-br from-primary-100 to-pink-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <span className="text-primary-600 font-bold text-4xl">A</span>
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Carlos Santos</h3>
-              <p className="text-primary-600 font-medium mb-4">Chef de Cozinha</p>
-              <p className="text-gray-600">
-                Com anos de experiência, Carlos garante que cada cupcake 
-                tenha o sabor perfeito e a textura ideal.
-              </p>
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">Anna</h3>
+              <p className="text-primary-600 font-medium mb-4">Cozinheira</p>
             </div>
+
           </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="text-center">
+              <div className="w-32 h-32 bg-gradient-to-br from-primary-100 to-pink-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <span className="text-primary-600 font-bold text-4xl">Ka</span>
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">Katharina</h3>
+              <p className="text-primary-600 font-medium mb-4">Cozinheira</p>
+            </div>
+
+            <div className="text-center">
+              <div className="w-32 h-32 bg-gradient-to-br from-primary-100 to-pink-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <span className="text-primary-600 font-bold text-4xl">Ry</span>
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">Ryan</h3>
+              <p className="text-primary-600 font-medium mb-4">Vendedor</p>
+            </div>
+
+            <div className="text-center">
+              <div className="w-32 h-32 bg-gradient-to-br from-primary-100 to-pink-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <span className="text-primary-600 font-bold text-4xl">Ca</span>
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">Carlos</h3>
+              <p className="text-primary-600 font-medium mb-4">Vendedor</p>
+            </div>
+
+          </div>
+
         </div>
       </section>
 
