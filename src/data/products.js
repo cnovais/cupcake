@@ -4,21 +4,21 @@ export const cakeTypes = [
     name: 'Massa Baunilha',
     description: 'Deliciosa massa de baunilha, macia e aromática',
     price: 15.00,
-    image: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=300&h=300&fit=crop&crop=center'
+    image: 'https://www.receiteria.com.br/wp-content/uploads/bolo-de-baunilha.jpeg'
   },
   {
     id: 'chocolate',
     name: 'Massa Chocolate',
     description: 'Massa de chocolate rica e cremosa',
     price: 18.00,
-    image: 'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=300&h=300&fit=crop&crop=center'
+    image: 'https://s2-receitas.glbimg.com/wJmq1MqeOZZ-VSLlDxRLdL2zj60=/0x0:1280x800/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_1f540e0b94d8437dbbc39d567a1dee68/internal_photos/bs/2022/1/N/aQD0fhQs2qW7qlFw0bTA/bolo-de-chocolate-facil.jpg'
   },
   {
     id: 'strawberry',
     name: 'Massa Morango',
     description: 'Massa sabor morango com pedacinhos de fruta',
     price: 16.00,
-    image: 'https://images.unsplash.com/photo-1486427944299-d1955d23e34d?w=300&h=300&fit=crop&crop=center'
+    image: 'https://comidinhasdochef.com/wp-content/uploads/2015/09/Receita-de-Bolo-de-Morango.jpg'
   }
 ];
 
@@ -28,35 +28,35 @@ export const fillings = [
     name: 'Chantily Azul',
     description: 'Chantily suave',
     price: 1.00,
-    image: 'https://i.pinimg.com/736x/f9/1d/4f/f91d4f95dc92e8d7c3b0222b4e20ec1f.jpg'
+    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRy9LRv2WncswSs4ZRHKMw6TKOynmlb8XT7rQ&s'
   },
   {
     id: 'chocolate-cream',
     name: 'Chantily Amarelo',
     description: 'Chantily suave',
     price: 1.00,
-    image: 'https://i.pinimg.com/736x/f9/1d/4f/f91d4f95dc92e8d7c3b0222b4e20ec1f.jpg'
+    image: 'https://png.pngtree.com/png-clipart/20241003/original/pngtree-whipped-cream-swirl-delight-isolated-on-transparent-background-png-image_16189640.png'
   },
   {
     id: 'strawberry-jam',
     name: 'Chantily Vermelho',
     description: 'Chantily suave',
     price: 1.00,
-    image: 'https://i.pinimg.com/736x/f9/1d/4f/f91d4f95dc92e8d7c3b0222b4e20ec1f.jpg'
+    image: 'https://i.ytimg.com/vi/n5SuDoEf9to/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLAWeC6_kd13jl5xkVeMgXZb2iK3MA'
   },
   {
     id: 'lemon-curd',
     name: 'Chantily Verde',
     description: 'Chantily suave',
     price: 1.00,
-    image: 'https://i.pinimg.com/736x/f9/1d/4f/f91d4f95dc92e8d7c3b0222b4e20ec1f.jpg'
+    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSACLPfBmSCF8lErM4tyBhpgUj7s2vs_93RLg&s'
   },
   {
     id: 'dulce-leche',
     name: 'Chantily Rosa',
     description: 'Chantily suave',
     price: 1.00,
-    image: 'https://i.pinimg.com/736x/f9/1d/4f/f91d4f95dc92e8d7c3b0222b4e20ec1f.jpg'
+    image: 'https://i.pinimg.com/736x/76/27/5a/76275ae2f9e02ad853b0cf07aeea999b.jpg'
   },
   {
     id: 'coconut-cream',
