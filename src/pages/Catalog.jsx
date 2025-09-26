@@ -69,16 +69,27 @@ const Catalog = () => {
   };
 
   const addToCartHandler = () => {
-    if (customCupcake) {
-      addToCart(customCupcake);
-      navigate('/cart');
-    }
+    if (!selectedCake || selectedDecorations.length === 0) return;
+
+    const cupcake = {
+      id: `cupcake_${Date.now()}`,
+      name: `${selectedCake.name} com ${selectedFillings.length > 0 ? selectedFillings.map(f => f.name).join(', ') + ' e ' : ''}${selectedDecorations.map(d => d.name).join(', ')}`,
+      cake: selectedCake,
+      fillings: selectedFillings,
+      decorations: selectedDecorations,
+      price: calculateTotal(),
+      quantity: 1,
+      custom: true
+    };
+
+    addToCart(cupcake);
+    navigate('/cart');
   };
 
   const resetSelection = () => {
     setSelectedCake(null);
     setSelectedFillings([]);
-    setSelectedDecoration(null);
+    setSelectedDecorations([]);
     setCustomCupcake(null);
     setCurrentStep(1);
   };
@@ -408,10 +419,7 @@ const Catalog = () => {
                 Criar Novo
               </button>
               <button
-                onClick={() => {
-                  createCustomCupcake();
-                  addToCartHandler();
-                }}
+                onClick={addToCartHandler}
                 className="flex-1 bg-primary-500 text-white px-6 py-3 rounded-lg hover:bg-primary-600 transition-colors"
               >
                 Adicionar ao Carrinho
