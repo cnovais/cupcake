@@ -146,9 +146,9 @@ const Catalog = () => {
           <div className="flex justify-center mt-4 text-xs md:text-sm text-gray-600">
             <span className={currentStep >= 1 ? 'text-primary-600 font-medium' : ''}>1. Massa</span>
             <span className="mx-2 md:mx-4">•</span>
-            <span className={currentStep >= 2 ? 'text-primary-600 font-medium' : ''}>2. Recheio</span>
+            <span className={currentStep >= 2 ? 'text-primary-600 font-medium' : ''}>2. Cobertura</span>
             <span className="mx-2 md:mx-4">•</span>
-            <span className={currentStep >= 3 ? 'text-primary-600 font-medium' : ''}>3. Decoração</span>
+            <span className={currentStep >= 3 ? 'text-primary-600 font-medium' : ''}>3. Toppings</span>
             <span className="mx-2 md:mx-4">•</span>
             <span className={currentStep >= 4 ? 'text-primary-600 font-medium' : ''}>4. Resumo</span>
           </div>
@@ -327,7 +327,7 @@ const Catalog = () => {
               {/* Fillings */}
               {selectedFillings.length > 0 && (
                 <div className="border-b pb-4">
-                  <h3 className="font-semibold text-gray-900 mb-2">Recheios:</h3>
+                  <h3 className="font-semibold text-gray-900 mb-2">Coberturas:</h3>
                   {selectedFillings.map((filling) => (
                     <div key={filling.id} className="flex justify-between items-center mb-1">
                       <span>{filling.name}</span>
@@ -339,7 +339,7 @@ const Catalog = () => {
 
               {/* Decoration */}
               <div className="border-b pb-4">
-                <h3 className="font-semibold text-gray-900 mb-2">Decoração:</h3>
+                <h3 className="font-semibold text-gray-900 mb-2">Toppings:</h3>
                 <div className="flex justify-between items-center">
                   <span>{selectedDecoration.name}</span>
                   <span className="font-semibold">R$ {selectedDecoration.price.toFixed(2)}</span>

@@ -101,10 +101,10 @@ const Cart = () => {
                             <div><strong>Massa:</strong> {item.cake?.name}</div>
                             {item.fillings && item.fillings.length > 0 && (
                               <div>
-                                <strong>Recheios:</strong> {item.fillings.map(f => f.name).join(', ')}
+                                <strong>Coberturas:</strong> {item.fillings.map(f => f.name).join(', ')}
                               </div>
                             )}
-                            <div><strong>Decoração:</strong> {item.decoration?.name}</div>
+                            <div><strong>Toppings:</strong> {item.decoration?.name}</div>
                           </div>
                         )}
                       </div>

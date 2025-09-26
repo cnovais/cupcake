@@ -25,44 +25,44 @@ export const cakeTypes = [
 export const fillings = [
   {
     id: 'vanilla-cream',
-    name: 'Creme de Baunilha',
-    description: 'Creme suave de baunilha',
-    price: 8.00,
+    name: 'Chantily Azul',
+    description: 'Chantily suave',
+    price: 1.00,
     image: '/api/placeholder/150/150'
   },
   {
     id: 'chocolate-cream',
-    name: 'Ganache de Chocolate',
-    description: 'Ganache cremoso de chocolate belga',
-    price: 10.00,
+    name: 'Chantily Amarelo',
+    description: 'Chantily suave',
+    price: 1.00,
     image: '/api/placeholder/150/150'
   },
   {
     id: 'strawberry-jam',
-    name: 'Geléia de Morango',
-    description: 'Geléia artesanal de morango',
-    price: 7.00,
+    name: 'Chantily Vermelho',
+    description: 'Chantily suave',
+    price: 1.00,
     image: '/api/placeholder/150/150'
   },
   {
     id: 'lemon-curd',
-    name: 'Creme de Limão',
-    description: 'Creme azedinho de limão siciliano',
-    price: 9.00,
+    name: 'Chantily Verde',
+    description: 'Chantily suave',
+    price: 1.00,
     image: '/api/placeholder/150/150'
   },
   {
     id: 'dulce-leche',
-    name: 'Doce de Leite',
-    description: 'Doce de leite cremoso',
-    price: 8.50,
+    name: 'Chantily Rosa',
+    description: 'Chantily suave',
+    price: 1.00,
     image: '/api/placeholder/150/150'
   },
   {
     id: 'coconut-cream',
-    name: 'Creme de Coco',
-    description: 'Creme suave de coco natural',
-    price: 9.50,
+    name: 'Chantily Branco',
+    description: 'Chantily suave',
+    price: 1.00,
     image: '/api/placeholder/150/150'
   }
 ];
@@ -92,7 +92,7 @@ export const decorations = [
   {
     id: 'fresh-fruits',
     name: 'Frutas Frescas',
-    description: 'Decoração com frutas da estação',
+    description: 'Toppings com frutas da estação',
     price: 16.00,
     image: '/api/placeholder/150/150'
   },

@@ -141,7 +141,7 @@ const About = () => {
                 <span className="text-gold-600 font-bold text-4xl">A</span>
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-2">Ana Costa</h3>
-              <p className="text-primary-600 font-medium mb-4">Especialista em Decoração</p>
+              <p className="text-primary-600 font-medium mb-4">Especialista em Toppings</p>
               <p className="text-gray-600">
                 Ana é responsável por transformar nossos cupcakes em verdadeiras 
                 obras de arte com suas decorações únicas.

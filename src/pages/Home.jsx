@@ -113,7 +113,7 @@ const Home = () => {
               <div className="w-20 h-20 bg-primary-500 rounded-full flex items-center justify-center mx-auto mb-6 text-white text-2xl font-bold">
                 2
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-4">Adicione o Recheio</h3>
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">Adicione o Cobertura</h3>
               <p className="text-gray-600">
                 Escolha até 5 tipos de recheio para criar a combinação perfeita de sabores.
               </p>

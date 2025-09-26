@@ -96,7 +96,7 @@ Uma aplicação web moderna para pedidos de cupcakes personalizados, inspirada e
 - **Chocolate** - R$ 18,00
 - **Morango** - R$ 16,00
 
-#### Recheios
+#### Coberturas
 - **Creme de Baunilha** - R$ 8,00
 - **Ganache de Chocolate** - R$ 10,00
 - **Geléia de Morango** - R$ 7,00
